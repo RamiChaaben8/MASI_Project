@@ -1,30 +1,24 @@
 package com.paint.command;
 
 import com.paint.factory.Shape;
-import com.paint.memento.CanvasMemento;
 import com.paint.observer.Canvas;
 
 public class DrawCommand implements ICommand {
     private Shape shape;
     private Canvas canvas;
-    private CanvasMemento previousState;
 
-    public DrawCommand(Canvas canvas, Shape shape) {
-        this.canvas = canvas;
+    public DrawCommand(Shape shape, Canvas canvas) {
         this.shape = shape;
+        this.canvas = canvas;
     }
 
     @Override
     public void execute() {
-        // Assume saving memento of the canvas image before drawing for undo
-        previousState = new CanvasMemento(canvas.snapshot(null, null));
-        shape.draw(canvas.getGraphicsContext2D());
+        canvas.addShape(shape);
     }
 
     @Override
     public void undo() {
-        if (previousState != null) {
-            canvas.getGraphicsContext2D().drawImage(previousState.getSnapshot(), 0, 0);
-        }
+        canvas.removeShape(shape);
     }
 }

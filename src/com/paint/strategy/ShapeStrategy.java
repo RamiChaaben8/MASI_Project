@@ -1,34 +1,37 @@
 package com.paint.strategy;
 
+import javafx.scene.canvas.GraphicsContext;
 import com.paint.factory.ShapeFactory;
 import com.paint.factory.Shape;
 import com.paint.singleton.AppState;
-import com.paint.decorator.BorderDecorator;
-import com.paint.decorator.FillDecorator;
-import com.paint.decorator.ShadowDecorator;
-import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.input.MouseEvent;
+import com.paint.observer.Canvas;
+import com.paint.command.DrawCommand;
+import com.paint.command.CommandHistory;
 
 public class ShapeStrategy implements DrawStrategy {
+    private ShapeFactory factory;
     private String shapeType;
-    private double startX, startY;
+    private Canvas canvas;
+    private CommandHistory history;
 
-    public ShapeStrategy(String shapeType) {
+    public ShapeStrategy(String shapeType, Canvas canvas, CommandHistory history) {
+        this.factory = new ShapeFactory();
         this.shapeType = shapeType;
+        this.canvas = canvas;
+        this.history = history;
     }
 
     @Override
-    public void draw(MouseEvent event, GraphicsContext gc) {
-        if (event.getEventType() == MouseEvent.MOUSE_PRESSED) {
-            startX = event.getX();
-            startY = event.getY();
-        } else if (event.getEventType() == MouseEvent.MOUSE_RELEASED) {
-            Shape baseShape = ShapeFactory.createShape(shapeType, AppState.getInstance().getCurrentColor());
-            baseShape.setBounds(startX, startY, event.getX(), event.getY());
+    public void draw(GraphicsContext gc, double x, double y) {
+        Shape shape = factory.createShape(shapeType, AppState.getInstance().getCurrentColor());
+        if (shape != null) {
+            shape.setX(x);
+            shape.setY(y);
+            shape.setW(50); // Default width
+            shape.setH(50); // Default height
             
-            // Applying Decorator chain
-            Shape decoratedShape = new ShadowDecorator(new BorderDecorator(new FillDecorator(baseShape)));
-            decoratedShape.draw(gc);
+            DrawCommand cmd = new DrawCommand(shape, canvas);
+            history.execute(cmd);
         }
     }
 }

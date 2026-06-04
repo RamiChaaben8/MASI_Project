@@ -10,8 +10,7 @@ public class CircleShape extends Shape {
 
     @Override
     public void draw(GraphicsContext gc) {
-        double radius = Math.max(Math.abs(endX - startX), Math.abs(endY - startY));
         gc.setStroke(color);
-        gc.strokeOval(startX - radius, startY - radius, radius * 2, radius * 2);
+        gc.strokeOval(x, y, w, h);
     }
 }

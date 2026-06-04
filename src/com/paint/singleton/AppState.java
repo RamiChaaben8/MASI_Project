@@ -7,10 +7,9 @@ import java.util.List;
 
 public class AppState {
     private static AppState instance;
-    private List<IObserver> observers = new ArrayList<>();
-    
     private Color currentColor = Color.BLACK;
-    private double currentLineWidth = 2.0;
+    private int brushSize = 2;
+    private List<IObserver> observers = new ArrayList<>();
 
     private AppState() { }
 
@@ -21,37 +20,33 @@ public class AppState {
         return instance;
     }
 
-    public void registerObserver(IObserver observer) {
-        if (!observers.contains(observer)) {
-            observers.add(observer);
-        }
-    }
-
-    public void unregisterObserver(IObserver observer) {
-        observers.remove(observer);
-    }
-
-    private void notifyObservers() {
-        for (IObserver observer : observers) {
-            observer.update();
-        }
+    public void setColor(Color c) {
+        this.currentColor = c;
+        notifyObservers();
     }
 
     public Color getCurrentColor() {
         return currentColor;
     }
 
-    public void setCurrentColor(Color currentColor) {
-        this.currentColor = currentColor;
+    public void setBrushSize(int brushSize) {
+        this.brushSize = brushSize;
         notifyObservers();
     }
 
-    public double getCurrentLineWidth() {
-        return currentLineWidth;
+    public int getBrushSize() {
+        return brushSize;
     }
 
-    public void setCurrentLineWidth(double currentLineWidth) {
-        this.currentLineWidth = currentLineWidth;
-        notifyObservers();
+    public void addObserver(IObserver o) {
+        if (!observers.contains(o)) {
+            observers.add(o);
+        }
+    }
+
+    public void notifyObservers() {
+        for (IObserver o : observers) {
+            o.update();
+        }
     }
 }

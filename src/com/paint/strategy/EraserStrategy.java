@@ -1,16 +1,12 @@
 package com.paint.strategy;
 
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.paint.Color;
+import com.paint.singleton.AppState;
 
 public class EraserStrategy implements DrawStrategy {
     @Override
-    public void draw(MouseEvent event, GraphicsContext gc) {
-        if (event.getEventType() == MouseEvent.MOUSE_DRAGGED || event.getEventType() == MouseEvent.MOUSE_PRESSED) {
-            gc.setFill(Color.WHITE);
-            double size = gc.getLineWidth() * 5; 
-            gc.fillRect(event.getX() - size/2, event.getY() - size/2, size, size);
-        }
+    public void draw(GraphicsContext gc, double x, double y) {
+        double size = AppState.getInstance().getBrushSize();
+        gc.clearRect(x - size/2, y - size/2, size, size);
     }
 }

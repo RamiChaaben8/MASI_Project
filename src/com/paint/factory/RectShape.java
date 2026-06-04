@@ -10,11 +10,7 @@ public class RectShape extends Shape {
 
     @Override
     public void draw(GraphicsContext gc) {
-        double x = Math.min(startX, endX);
-        double y = Math.min(startY, endY);
-        double width = Math.abs(endX - startX);
-        double height = Math.abs(endY - startY);
         gc.setStroke(color);
-        gc.strokeRect(x, y, width, height);
+        gc.strokeRect(x, y, w, h);
     }
 }

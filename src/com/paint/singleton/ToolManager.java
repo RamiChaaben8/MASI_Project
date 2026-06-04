@@ -3,14 +3,13 @@ package com.paint.singleton;
 import com.paint.strategy.DrawStrategy;
 import com.paint.strategy.FreehandStrategy;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.input.MouseEvent;
 
 public class ToolManager {
     private static ToolManager instance;
-    private DrawStrategy currentStrategy;
+    private DrawStrategy strategy;
 
     private ToolManager() {
-        this.currentStrategy = new FreehandStrategy();
+        this.strategy = new FreehandStrategy();
     }
 
     public static ToolManager getInstance() {
@@ -20,13 +19,13 @@ public class ToolManager {
         return instance;
     }
 
-    public void setStrategy(DrawStrategy strategy) {
-        this.currentStrategy = strategy;
+    public void setStrategy(DrawStrategy s) {
+        this.strategy = s;
     }
 
-    public void executeDraw(MouseEvent event, GraphicsContext gc) {
-        if (currentStrategy != null) {
-            currentStrategy.draw(event, gc);
+    public void executeDraw(GraphicsContext gc, double x, double y) {
+        if (strategy != null) {
+            strategy.draw(gc, x, y);
         }
     }
 }

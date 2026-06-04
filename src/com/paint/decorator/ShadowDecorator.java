@@ -2,24 +2,30 @@ package com.paint.decorator;
 
 import com.paint.factory.Shape;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.effect.DropShadow;
 import javafx.scene.paint.Color;
+import javafx.scene.effect.DropShadow;
 
 public class ShadowDecorator extends ShapeDecorator {
-    public ShadowDecorator(Shape decoratedShape) {
-        super(decoratedShape);
+    private Color shadowColor;
+    private int offset;
+
+    public ShadowDecorator(Shape s, Color shadowColor, int offset) {
+        super(s);
+        this.shadowColor = shadowColor;
+        this.offset = offset;
     }
 
     @Override
     public void draw(GraphicsContext gc) {
-        DropShadow dropShadow = new DropShadow();
-        dropShadow.setRadius(5.0);
-        dropShadow.setOffsetX(3.0);
-        dropShadow.setOffsetY(3.0);
-        dropShadow.setColor(Color.color(0.4, 0.5, 0.5));
+        gc.save();
+        DropShadow ds = new DropShadow();
+        ds.setOffsetY(offset);
+        ds.setOffsetX(offset);
+        ds.setColor(shadowColor);
+        gc.setEffect(ds);
         
-        gc.setEffect(dropShadow);
         super.draw(gc);
-        gc.setEffect(null);
+        
+        gc.restore();
     }
 }

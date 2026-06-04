@@ -1,15 +1,26 @@
 package com.paint.memento;
 
-import javafx.scene.image.Image;
+import com.paint.factory.Shape;
+import java.util.ArrayList;
+import java.util.List;
 
 public class CanvasMemento {
-    private final Image snapshot;
+    private List<Shape> shapes;
+    private int brushSize;
 
-    public CanvasMemento(Image snapshot) {
-        this.snapshot = snapshot;
+    public CanvasMemento(List<Shape> shapes, int brushSize) {
+        this.shapes = new ArrayList<>();
+        for (Shape s : shapes) {
+            this.shapes.add(s.clone());
+        }
+        this.brushSize = brushSize;
     }
 
-    public Image getSnapshot() {
-        return snapshot;
+    public List<Shape> getShapes() {
+        return shapes;
+    }
+    
+    public int getBrushSize() {
+        return brushSize;
     }
 }

@@ -1,18 +1,14 @@
 package com.paint.strategy;
 
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.input.MouseEvent;
+import com.paint.singleton.AppState;
 
 public class FreehandStrategy implements DrawStrategy {
     @Override
-    public void draw(MouseEvent event, GraphicsContext gc) {
-        if (event.getEventType() == MouseEvent.MOUSE_PRESSED) {
-            gc.beginPath();
-            gc.moveTo(event.getX(), event.getY());
-            gc.stroke();
-        } else if (event.getEventType() == MouseEvent.MOUSE_DRAGGED) {
-            gc.lineTo(event.getX(), event.getY());
-            gc.stroke();
-        }
+    public void draw(GraphicsContext gc, double x, double y) {
+        gc.setLineWidth(AppState.getInstance().getBrushSize());
+        gc.setStroke(AppState.getInstance().getCurrentColor());
+        gc.lineTo(x, y);
+        gc.stroke();
     }
 }

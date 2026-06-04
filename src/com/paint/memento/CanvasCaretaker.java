@@ -3,15 +3,15 @@ package com.paint.memento;
 import java.util.Stack;
 
 public class CanvasCaretaker {
-    private Stack<CanvasMemento> history = new Stack<>();
+    private Stack<CanvasMemento> mementos = new Stack<>();
 
-    public void saveMemento(CanvasMemento memento) {
-        history.push(memento);
+    public void save(CanvasMemento m) {
+        mementos.push(m);
     }
 
-    public CanvasMemento getLastMemento() {
-        if (!history.isEmpty()) {
-            return history.pop();
+    public CanvasMemento restore() {
+        if (!mementos.isEmpty()) {
+            return mementos.pop();
         }
         return null;
     }

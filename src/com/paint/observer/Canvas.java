@@ -2,30 +2,67 @@ package com.paint.observer;
 
 import com.paint.singleton.AppState;
 import com.paint.singleton.ToolManager;
+import com.paint.memento.CanvasMemento;
+import com.paint.factory.Shape;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Canvas extends javafx.scene.canvas.Canvas implements IObserver {
-    
+    private List<Shape> shapes = new ArrayList<>();
+
     public Canvas(double width, double height) {
         super(width, height);
-        AppState.getInstance().registerObserver(this);
+        AppState.getInstance().addObserver(this);
         
+        this.setOnMousePressed(e -> ToolManager.getInstance().executeDraw(getGraphicsContext2D(), e.getX(), e.getY()));
+        this.setOnMouseDragged(e -> ToolManager.getInstance().executeDraw(getGraphicsContext2D(), e.getX(), e.getY()));
+        
+        redraw();
+    }
+
+    public void addShape(Shape s) {
+        shapes.add(s);
+        redraw();
+    }
+    
+    public void removeShape(Shape s) {
+        shapes.remove(s);
+        redraw();
+    }
+    
+    public void clearShapes() {
+        shapes.clear();
+        redraw();
+    }
+    
+    public CanvasMemento createMemento() {
+        return new CanvasMemento(shapes, AppState.getInstance().getBrushSize());
+    }
+    
+    public void restore(CanvasMemento m) {
+        if (m != null) {
+            this.shapes = new ArrayList<>();
+            for (Shape s : m.getShapes()) {
+                this.shapes.add(s.clone());
+            }
+            redraw();
+        }
+    }
+
+    public void redraw() {
         GraphicsContext gc = getGraphicsContext2D();
         gc.setFill(Color.WHITE);
-        gc.fillRect(0, 0, width, height);
+        gc.fillRect(0, 0, getWidth(), getHeight());
         
-        this.setOnMousePressed(e -> ToolManager.getInstance().executeDraw(e, gc));
-        this.setOnMouseDragged(e -> ToolManager.getInstance().executeDraw(e, gc));
-        this.setOnMouseReleased(e -> ToolManager.getInstance().executeDraw(e, gc));
-        
-        update();
+        for (Shape shape : shapes) {
+            shape.draw(gc);
+        }
     }
 
     @Override
     public void update() {
-        GraphicsContext gc = getGraphicsContext2D();
-        gc.setStroke(AppState.getInstance().getCurrentColor());
-        gc.setLineWidth(AppState.getInstance().getCurrentLineWidth());
+        // AppState changed, we might need to redraw or prepare settings
     }
 }

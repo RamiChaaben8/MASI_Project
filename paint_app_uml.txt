@@ -1,0 +1,341 @@
+====================================================================
+  PAINT APP UML – 7 DESIGN PATTERNS
+  Simple JavaFX Paint Application
+====================================================================
+
+PAGE 1 – SINGLETON + OBSERVER + COMMAND + MEMENTO
+====================================================================
+
+────────────────────────────────────────────────────────────────────
+SINGLETON PATTERN
+────────────────────────────────────────────────────────────────────
+
+┌─────────────────────────────────────┐
+│           AppState                  │
+│         «Singleton»                 │
+├─────────────────────────────────────┤
+│ - instance      : AppState          │
+│ - currentColor  : AppColor          │
+│ - brushSize     : int               │
+│ - observers     : List<IObserver>   │
+├─────────────────────────────────────┤
+│ + getInstance()       : AppState    │
+│ + setColor(c)         : void        │
+│ + addObserver(o)      : void        │
+│ + notifyObservers()   : void        │
+└─────────────────────────────────────┘
+             │ uses
+             ▼
+┌─────────────────────────────────────┐
+│           ToolManager               │
+│         «Singleton»                 │
+├─────────────────────────────────────┤
+│ - instance   : ToolManager          │
+│ - strategy   : DrawStrategy         │
+├─────────────────────────────────────┤
+│ + getInstance()          : TM       │
+│ + setStrategy(s)         : void     │
+│ + executeDraw(gc,x,y)    : void     │
+└─────────────────────────────────────┘
+
+  AppState ──────────────────────────────── notifies ──► IObserver
+  ToolManager ──── uses ──────────────────────────────► ICommand
+  ToolManager ──── uses ──────────────────────────────► DrawStrategy
+
+
+────────────────────────────────────────────────────────────────────
+OBSERVER PATTERN
+────────────────────────────────────────────────────────────────────
+
+┌───────────────────────────────┐
+│          IObserver            │
+│         «interface»           │
+├───────────────────────────────┤
+│ + update() : void             │
+└───────────────────────────────┘
+        ▲                ▲
+        │ implements     │ implements
+        │                │
+┌───────────────────┐  ┌───────────────────────────────────┐
+│      Canvas       │  │            UIPanel                │
+│ Originator+Observer  │          «Observer»               │
+├───────────────────┤  ├───────────────────────────────────┤
+│ - shapes: List    │  │                                   │
+├───────────────────┤  ├───────────────────────────────────┤
+│ + update()        │  │ + update()          : void        │
+│ + redraw()        │  │ + refreshToolbar()  : void        │
+│ + createMemento() │  └───────────────────────────────────┘
+│ + restore(m)      │
+└───────────────────┘
+
+
+────────────────────────────────────────────────────────────────────
+COMMAND PATTERN
+────────────────────────────────────────────────────────────────────
+
+┌──────────────────────────────────┐
+│           ICommand               │
+│          «interface»             │
+├──────────────────────────────────┤
+│ + execute() : void               │
+│ + undo()    : void               │
+└──────────────────────────────────┘
+    ▲             ▲             ▲
+    │impl          │impl          │impl
+    │              │              │
+┌──────────┐ ┌──────────────┐ ┌──────────────┐
+│DrawCommand│ │DeleteCommand │ │ClearCommand  │
+│«Command» │ │«Command»     │ │«Command»     │
+├──────────┤ ├──────────────┤ ├──────────────┤
+│- shape   │ │- shape:Shape │ │- memento     │
+├──────────┤ ├──────────────┤ ├──────────────┤
+│+execute()│ │+ execute()   │ │+ execute()   │
+│+undo()   │ │+ undo()      │ │+ undo()      │
+└──────────┘ └──────────────┘ └──────────────┘
+
+┌────────────────────────────────────────────┐
+│             CommandHistory                 │
+│              «Invoker»                     │
+├────────────────────────────────────────────┤
+│ - history   : Stack<ICommand>              │
+│ - redoStack : Stack<ICommand>              │
+├────────────────────────────────────────────┤
+│ + execute(cmd : ICommand) : void           │
+│ + undo()                  : void           │
+│ + redo()                  : void           │
+└────────────────────────────────────────────┘
+  CommandHistory ──── uses ──────────────────► ICommand
+
+
+────────────────────────────────────────────────────────────────────
+MEMENTO PATTERN
+────────────────────────────────────────────────────────────────────
+
+┌──────────────────────────────────────┐
+│           CanvasMemento              │
+│            «Memento»                 │
+├──────────────────────────────────────┤
+│ - shapes    : List<Shape>            │
+│ - brushSize : int                    │
+├──────────────────────────────────────┤
+│ + getShapes()    : List<Shape>       │
+└──────────────────────────────────────┘
+
+┌──────────────────────────────────────┐
+│          CanvasCaretaker             │
+│            «Caretaker»               │
+├──────────────────────────────────────┤
+│ - mementos : Stack<CanvasMemento>    │
+├──────────────────────────────────────┤
+│ + save(m : CanvasMemento) : void     │
+│ + restore()   : CanvasMemento        │
+└──────────────────────────────────────┘
+
+  CanvasCaretaker ──── holds ─────────────► CanvasMemento
+  Canvas          ──── creates ──────────► CanvasMemento
+  ClearCommand    ──── saves/restores ───► CanvasMemento
+
+
+====================================================================
+PAGE 2 – STRATEGY + FACTORY METHOD
+====================================================================
+
+────────────────────────────────────────────────────────────────────
+STRATEGY PATTERN
+────────────────────────────────────────────────────────────────────
+
+  ToolManager  ──── uses ────────────────────────────► DrawStrategy
+  (Singleton)
+
+┌──────────────────────────────────────────────────┐
+│                  DrawStrategy                    │
+│             «interface – Strategy»               │
+├──────────────────────────────────────────────────┤
+│ + draw(gc: GraphicsContext,                      │
+│         x: double, y: double) : void             │
+└──────────────────────────────────────────────────┘
+        ▲                ▲                ▲
+        │impl             │impl             │impl
+        │                 │                 │
+┌──────────────┐  ┌───────────────────┐  ┌──────────────────┐
+│FreehandStrat.│  │  ShapeStrategy    │  │ EraserStrategy   │
+│«Strategy»    │  │  «Strategy»       │  │ «Strategy»       │
+├──────────────┤  ├───────────────────┤  ├──────────────────┤
+│              │  │- factory:         │  │                  │
+│              │  │  ShapeFactory     │  │                  │
+├──────────────┤  ├───────────────────┤  ├──────────────────┤
+│+ draw(gc,x,y)│  │+ draw(gc,x,y)     │  │+ draw(gc,x,y)    │
+│ trace mouse  │  │ create+draw shape │  │ clear area       │
+└──────────────┘  └───────────────────┘  └──────────────────┘
+                          │ uses
+                          ▼
+                  ┌────────────────┐
+                  │  ShapeFactory  │
+                  └────────────────┘
+
+
+────────────────────────────────────────────────────────────────────
+FACTORY METHOD PATTERN
+────────────────────────────────────────────────────────────────────
+
+┌──────────────────────────────────────────┐
+│              ShapeFactory                │
+│           «Factory Method»               │
+├──────────────────────────────────────────┤
+│ + createShape(type   : String,           │
+│               color  : AppColor): Shape  │
+│                                          │
+│   "CIRCLE" ──► new CircleShape(color)    │
+│   "RECT"   ──► new RectShape(color)      │
+│   "LINE"   ──► new LineShape(color)      │
+└──────────────────────────────────────────┘
+                 │ creates
+                 ▼
+┌──────────────────────────────────────────┐
+│                 Shape                    │
+│          «abstract – Product»            │
+├──────────────────────────────────────────┤
+│ - color  : AppColor                      │
+│ - x, y   : double                        │
+│ - w, h   : double                        │
+├──────────────────────────────────────────┤
+│ + draw(gc: GraphicsContext) : void       │
+│   {abstract}                             │
+│ + clone() : Shape                        │
+└──────────────────────────────────────────┘
+        ▲              ▲              ▲
+        │extends        │extends        │extends
+        │               │               │
+┌─────────────┐  ┌─────────────┐  ┌─────────────┐
+│ CircleShape │  │  RectShape  │  │  LineShape  │
+│  «Shape»    │  │  «Shape»    │  │  «Shape»    │
+├─────────────┤  ├─────────────┤  ├─────────────┤
+│+draw(gc)    │  │+draw(gc)    │  │+draw(gc)    │
+└─────────────┘  └─────────────┘  └─────────────┘
+
+
+====================================================================
+PAGE 3 – DECORATOR PATTERN
+====================================================================
+
+────────────────────────────────────────────────────────────────────
+DECORATOR PATTERN
+────────────────────────────────────────────────────────────────────
+
+┌──────────────────────────────────────────┐
+│                 Shape                    │
+│        «abstract – Component»            │
+├──────────────────────────────────────────┤
+│ - color : AppColor                       │
+├──────────────────────────────────────────┤
+│ + draw(gc: GraphicsContext) : void       │
+│   {abstract}                             │
+│ + clone() : Shape                        │
+└──────────────────────────────────────────┘
+                    ▲
+                    │ extends
+                    │
+┌──────────────────────────────────────────┐
+│            ShapeDecorator                │
+│        «Decorator – abstract»            │
+├──────────────────────────────────────────┤
+│ - wrapped : Shape                        │
+├──────────────────────────────────────────┤
+│ + ShapeDecorator(s : Shape)              │
+│ + draw(gc: GraphicsContext) : void       │
+│   delegates to wrapped.draw(gc)          │
+└──────────────────────────────────────────┘
+        ▲               ▲               ▲
+        │extends         │extends         │extends
+        │                │                │
+┌──────────────┐  ┌─────────────────┐  ┌──────────────────┐
+│FillDecorator │  │BorderDecorator  │  │ShadowDecorator   │
+│«Decorator»   │  │«Decorator»      │  │«Decorator»       │
+├──────────────┤  ├─────────────────┤  ├──────────────────┤
+│- fillColor   │  │- strokeColor    │  │- shadowColor     │
+│  : AppColor  │  │  : AppColor     │  │  : AppColor      │
+│              │  │- strokeWidth    │  │- offset : int    │
+│              │  │  : double       │  │                  │
+├──────────────┤  ├─────────────────┤  ├──────────────────┤
+│+ draw(gc)    │  │+ draw(gc)       │  │+ draw(gc)        │
+│ fill then    │  │ stroke then     │  │ shadow then      │
+│ delegate     │  │ delegate        │  │ delegate         │
+└──────────────┘  └─────────────────┘  └──────────────────┘
+
+
+STACKING EXAMPLE
+----------------
+
+  Shape s = factory.createShape("CIRCLE", color);
+  s = new FillDecorator(s, AppColor.RED);
+  s = new BorderDecorator(s, AppColor.BLACK, 2.0);
+  s = new ShadowDecorator(s, AppColor.GRAY, 3);
+  s.draw(gc);
+
+  Execution order: ShadowDecorator
+                      └─► BorderDecorator
+                               └─► FillDecorator
+                                        └─► CircleShape.draw(gc)
+
+
+====================================================================
+FULL PATTERN RELATIONSHIP SUMMARY
+====================================================================
+
+  AppState (Singleton)
+    ├── holds current color, brush size, observer list
+    ├── notifies ──────────────────────────────────────► IObserver
+    │                                              (Canvas, UIPanel)
+    └── uses ──────────────────────────────────────────► ToolManager
+
+  ToolManager (Singleton)
+    ├── holds current DrawStrategy
+    ├── uses ──────────────────────────────────────────► DrawStrategy
+    └── uses ──────────────────────────────────────────► CommandHistory
+
+  DrawStrategy (Strategy)
+    ├── FreehandStrategy   ── draws free lines
+    ├── ShapeStrategy      ── uses ShapeFactory to build shapes
+    └── EraserStrategy     ── clears canvas area
+
+  ShapeFactory (Factory Method)
+    └── creates ───────────────────────────────────────► Shape
+                                          (Circle / Rect / Line)
+
+  ShapeDecorator (Decorator)
+    ├── FillDecorator      ── adds fill
+    ├── BorderDecorator    ── adds border
+    └── ShadowDecorator    ── adds shadow
+
+  ICommand (Command)
+    ├── DrawCommand        ── adds shape to canvas
+    ├── DeleteCommand      ── removes shape from canvas
+    └── ClearCommand       ── saves Memento then clears canvas
+
+  CommandHistory (Command – Invoker)
+    └── manages Stack<ICommand> for undo / redo
+
+  CanvasMemento (Memento)
+    └── snapshot of shapes list at a point in time
+
+  CanvasCaretaker (Memento – Caretaker)
+    └── manages Stack<CanvasMemento>
+
+  Canvas
+    ├── implements IObserver
+    ├── acts as Originator (creates CanvasMemento)
+    └── restored by ClearCommand via CanvasCaretaker
+
+
+====================================================================
+ARROW / NOTATION KEY
+====================================================================
+
+  ──────────────────────────────► solid arrow   = uses / creates / notifies
+  - - - - - - - - - - - - - - -► dashed arrow  = implements / extends (dashed)
+  ▲  (open triangle tip)         = extends / implements
+  ►  (filled tip)                = association / dependency
+
+====================================================================
+  END OF UML DOCUMENT
+====================================================================
