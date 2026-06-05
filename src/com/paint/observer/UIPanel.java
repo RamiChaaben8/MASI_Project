@@ -10,10 +10,21 @@ import com.paint.command.ClearCommand;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.ColorPicker;
+import javafx.scene.control.Label;
+import javafx.scene.control.Slider;
 import javafx.scene.layout.VBox;
+
+import com.paint.command.DecorateAllCommand;
+import javafx.scene.control.CheckBox;
+import javafx.scene.layout.HBox;
 
 public class UIPanel extends VBox implements IObserver {
     private ColorPicker colorPicker;
+    private ColorPicker secondaryColorPicker;
+    private Slider sizeSlider;
+    private CheckBox cbFill;
+    private CheckBox cbBorder;
+    private CheckBox cbShadow;
 
     public UIPanel(Canvas canvas, CommandHistory history) {
         setSpacing(10);
@@ -21,10 +32,10 @@ public class UIPanel extends VBox implements IObserver {
         AppState.getInstance().addObserver(this);
 
         Button btnFreehand = new Button("Freehand");
-        btnFreehand.setOnAction(e -> ToolManager.getInstance().setStrategy(new FreehandStrategy()));
+        btnFreehand.setOnAction(e -> ToolManager.getInstance().setStrategy(new FreehandStrategy(canvas, history)));
 
         Button btnEraser = new Button("Eraser");
-        btnEraser.setOnAction(e -> ToolManager.getInstance().setStrategy(new EraserStrategy()));
+        btnEraser.setOnAction(e -> ToolManager.getInstance().setStrategy(new EraserStrategy(canvas, history)));
 
         Button btnCircle = new Button("Circle");
         btnCircle.setOnAction(e -> ToolManager.getInstance().setStrategy(new ShapeStrategy("CIRCLE", canvas, history)));
@@ -34,6 +45,32 @@ public class UIPanel extends VBox implements IObserver {
 
         Button btnLine = new Button("Line");
         btnLine.setOnAction(e -> ToolManager.getInstance().setStrategy(new ShapeStrategy("LINE", canvas, history)));
+
+        colorPicker = new ColorPicker(AppState.getInstance().getCurrentColor());
+        colorPicker.setOnAction(e -> AppState.getInstance().setColor(colorPicker.getValue()));
+
+        Label secColorLabel = new Label("Decorator Color:");
+        secondaryColorPicker = new ColorPicker(AppState.getInstance().getSecondaryColor());
+        secondaryColorPicker.setOnAction(e -> AppState.getInstance().setSecondaryColor(secondaryColorPicker.getValue()));
+
+        Label sizeLabel = new Label("Brush Size:");
+        sizeSlider = new Slider(1, 100, AppState.getInstance().getBrushSize());
+        sizeSlider.setShowTickLabels(true);
+        sizeSlider.valueProperty().addListener((obs, oldVal, newVal) -> {
+            AppState.getInstance().setBrushSize(newVal.intValue());
+        });
+
+        cbFill = new CheckBox("Fill");
+        cbFill.setOnAction(e -> AppState.getInstance().setUseFill(cbFill.isSelected()));
+
+        cbBorder = new CheckBox("Border");
+        cbBorder.setOnAction(e -> AppState.getInstance().setUseBorder(cbBorder.isSelected()));
+
+        cbShadow = new CheckBox("Shadow");
+        cbShadow.setOnAction(e -> AppState.getInstance().setUseShadow(cbShadow.isSelected()));
+
+        Button btnDecorateAll = new Button("Decorate All Existing");
+        btnDecorateAll.setOnAction(e -> history.execute(new DecorateAllCommand(canvas)));
 
         Button btnClear = new Button("Clear");
         btnClear.setOnAction(e -> {
@@ -47,18 +84,27 @@ public class UIPanel extends VBox implements IObserver {
         Button btnRedo = new Button("Redo");
         btnRedo.setOnAction(e -> history.redo());
 
-        colorPicker = new ColorPicker(AppState.getInstance().getCurrentColor());
-        colorPicker.setOnAction(e -> AppState.getInstance().setColor(colorPicker.getValue()));
-
-        getChildren().addAll(btnFreehand, btnEraser, btnCircle, btnRect, btnLine, colorPicker, btnClear, btnUndo, btnRedo);
+        getChildren().addAll(
+            btnFreehand, btnEraser, btnCircle, btnRect, btnLine, 
+            new Label("Primary Color:"), colorPicker, 
+            secColorLabel, secondaryColorPicker,
+            sizeLabel, sizeSlider,
+            new Label("Decorators:"), cbFill, cbBorder, cbShadow,
+            btnDecorateAll, btnClear, btnUndo, btnRedo
+        );
     }
     
     public void refreshToolbar() {
-        // refresh logic
+        colorPicker.setValue(AppState.getInstance().getCurrentColor());
+        secondaryColorPicker.setValue(AppState.getInstance().getSecondaryColor());
+        sizeSlider.setValue(AppState.getInstance().getBrushSize());
+        cbFill.setSelected(AppState.getInstance().isUseFill());
+        cbBorder.setSelected(AppState.getInstance().isUseBorder());
+        cbShadow.setSelected(AppState.getInstance().isUseShadow());
     }
 
     @Override
     public void update() {
-        colorPicker.setValue(AppState.getInstance().getCurrentColor());
+        refreshToolbar();
     }
 }

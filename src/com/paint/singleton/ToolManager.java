@@ -23,9 +23,15 @@ public class ToolManager {
         this.strategy = s;
     }
 
-    public void executeDraw(GraphicsContext gc, double x, double y) {
-        if (strategy != null) {
-            strategy.draw(gc, x, y);
-        }
+    public void onPress(double x, double y) {
+        if (strategy != null) strategy.onPress(x, y);
+    }
+
+    public void onDrag(double x, double y) {
+        if (strategy != null) strategy.onDrag(x, y);
+    }
+
+    public void onRelease(double x, double y) {
+        if (strategy != null) strategy.onRelease(x, y);
     }
 }

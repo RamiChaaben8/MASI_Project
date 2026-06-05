@@ -8,7 +8,11 @@ import java.util.List;
 public class AppState {
     private static AppState instance;
     private Color currentColor = Color.BLACK;
+    private Color secondaryColor = Color.RED;
     private int brushSize = 2;
+    private boolean useFill = false;
+    private boolean useBorder = false;
+    private boolean useShadow = false;
     private List<IObserver> observers = new ArrayList<>();
 
     private AppState() { }
@@ -29,6 +33,15 @@ public class AppState {
         return currentColor;
     }
 
+    public void setSecondaryColor(Color c) {
+        this.secondaryColor = c;
+        notifyObservers();
+    }
+
+    public Color getSecondaryColor() {
+        return secondaryColor;
+    }
+
     public void setBrushSize(int brushSize) {
         this.brushSize = brushSize;
         notifyObservers();
@@ -37,6 +50,27 @@ public class AppState {
     public int getBrushSize() {
         return brushSize;
     }
+
+    public void setUseFill(boolean useFill) {
+        this.useFill = useFill;
+        notifyObservers();
+    }
+
+    public boolean isUseFill() { return useFill; }
+
+    public void setUseBorder(boolean useBorder) {
+        this.useBorder = useBorder;
+        notifyObservers();
+    }
+
+    public boolean isUseBorder() { return useBorder; }
+
+    public void setUseShadow(boolean useShadow) {
+        this.useShadow = useShadow;
+        notifyObservers();
+    }
+
+    public boolean isUseShadow() { return useShadow; }
 
     public void addObserver(IObserver o) {
         if (!observers.contains(o)) {
