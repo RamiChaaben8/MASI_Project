@@ -5,17 +5,15 @@ import com.paint.strategy.FreehandStrategy;
 import javafx.scene.canvas.GraphicsContext;
 
 public class ToolManager {
-    private static ToolManager instance;
     private DrawStrategy strategy;
 
     private ToolManager() {
         this.strategy = new FreehandStrategy();
     }
+    private static final ToolManager instance=new ToolManager();
 
     public static ToolManager getInstance() {
-        if (instance == null) {
-            instance = new ToolManager();
-        }
+
         return instance;
     }
 

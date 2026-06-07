@@ -18,6 +18,9 @@ import com.paint.command.DecorateAllCommand;
 import javafx.scene.control.CheckBox;
 import javafx.scene.layout.HBox;
 
+import com.paint.memento.CanvasCaretaker;
+import com.paint.memento.CanvasMemento;
+
 public class UIPanel extends VBox implements IObserver {
     private ColorPicker colorPicker;
     private ColorPicker secondaryColorPicker;
@@ -25,6 +28,7 @@ public class UIPanel extends VBox implements IObserver {
     private CheckBox cbFill;
     private CheckBox cbBorder;
     private CheckBox cbShadow;
+    private CanvasCaretaker caretaker = new CanvasCaretaker();
 
     public UIPanel(Canvas canvas, CommandHistory history) {
         setSpacing(10);
@@ -71,6 +75,15 @@ public class UIPanel extends VBox implements IObserver {
 
         Button btnDecorateAll = new Button("Decorate All Existing");
         btnDecorateAll.setOnAction(e -> history.execute(new DecorateAllCommand(canvas)));
+        
+        Button btnSave = new Button("Save Workspace");
+        btnSave.setOnAction(e -> caretaker.saveToFile(canvas.createMemento()));
+
+        Button btnLoad = new Button("Load Workspace");
+        btnLoad.setOnAction(e -> {
+            CanvasMemento m = caretaker.loadFromFile();
+            if (m != null) canvas.restore(m);
+        });
 
         Button btnClear = new Button("Clear");
         btnClear.setOnAction(e -> {
@@ -90,7 +103,7 @@ public class UIPanel extends VBox implements IObserver {
             secColorLabel, secondaryColorPicker,
             sizeLabel, sizeSlider,
             new Label("Decorators:"), cbFill, cbBorder, cbShadow,
-            btnDecorateAll, btnClear, btnUndo, btnRedo
+            btnDecorateAll, btnSave, btnLoad, btnClear, btnUndo, btnRedo
         );
     }
     

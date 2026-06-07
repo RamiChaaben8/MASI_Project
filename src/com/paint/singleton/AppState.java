@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AppState {
-    private static AppState instance;
     private Color currentColor = Color.BLACK;
     private Color secondaryColor = Color.RED;
     private int brushSize = 2;
@@ -16,11 +15,9 @@ public class AppState {
     private List<IObserver> observers = new ArrayList<>();
 
     private AppState() { }
+    private static final AppState instance = new AppState();
 
     public static AppState getInstance() {
-        if (instance == null) {
-            instance = new AppState();
-        }
         return instance;
     }
 
