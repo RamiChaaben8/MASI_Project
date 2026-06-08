@@ -1,10 +1,12 @@
 package com.paint.memento;
 
 import com.paint.factory.Shape;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CanvasMemento {
+public class CanvasMemento implements Serializable {
+    private static final long serialVersionUID = 1L;
     private List<Shape> shapes;
     private int brushSize;
 

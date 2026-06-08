@@ -2,9 +2,11 @@ package com.paint.factory;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
+import java.io.Serializable;
 
-public abstract class Shape implements Cloneable {
-    protected Color color;
+public abstract class Shape implements Cloneable, Serializable {
+    private static final long serialVersionUID = 1L;
+    protected transient Color color;
     protected double x, y;
     protected double w, h;
 
@@ -31,6 +33,30 @@ public abstract class Shape implements Cloneable {
             return (Shape) super.clone();
         } catch (CloneNotSupportedException e) {
             return null;
+        }
+    }
+
+    private void writeObject(java.io.ObjectOutputStream out) throws java.io.IOException {
+        out.defaultWriteObject();
+        if (color != null) {
+            out.writeBoolean(true);
+            out.writeDouble(color.getRed());
+            out.writeDouble(color.getGreen());
+            out.writeDouble(color.getBlue());
+            out.writeDouble(color.getOpacity());
+        } else {
+            out.writeBoolean(false);
+        }
+    }
+
+    private void readObject(java.io.ObjectInputStream in) throws java.io.IOException, ClassNotFoundException {
+        in.defaultReadObject();
+        if (in.readBoolean()) {
+            double r = in.readDouble();
+            double g = in.readDouble();
+            double b = in.readDouble();
+            double a = in.readDouble();
+            this.color = new Color(r, g, b, a);
         }
     }
 }
