@@ -1,7 +1,7 @@
 package com.paint.strategy;
 
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
+import com.paint.factory.IShapeFactory;
 import com.paint.factory.ShapeFactory;
 import com.paint.factory.Shape;
 import com.paint.singleton.AppState;
@@ -15,15 +15,13 @@ import com.paint.decorator.ShadowDecorator;
 
 public class ShapeStrategy implements DrawStrategy {
     private ShapeFactory factory;
-    private String shapeType;
     private Canvas canvas;
     private CommandHistory history;
     private double startX, startY;
     private Shape currentShape;
 
-    public ShapeStrategy(String shapeType, Canvas canvas, CommandHistory history) {
-        this.factory = new ShapeFactory();
-        this.shapeType = shapeType;
+    public ShapeStrategy(IShapeFactory shapeFactory, Canvas canvas, CommandHistory history) {
+        this.factory = new ShapeFactory(shapeFactory);
         this.canvas = canvas;
         this.history = history;
     }
@@ -32,7 +30,7 @@ public class ShapeStrategy implements DrawStrategy {
     public void onPress(double x, double y) {
         startX = x;
         startY = y;
-        currentShape = factory.createShape(shapeType, AppState.getInstance().getCurrentColor());
+        currentShape = factory.createShape(AppState.getInstance().getCurrentColor());
         if (currentShape != null) {
             currentShape.setX(x);
             currentShape.setY(y);

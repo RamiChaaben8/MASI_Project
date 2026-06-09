@@ -1,0 +1,22 @@
+Design Patterns Used in the Paint App
+
+1. Command Pattern
+The app uses the ICommand interface along with DrawCommand, DeleteCommand, and ClearCommand to power the undo/redo functionality. Every time you draw or delete something, the CommandHistory saves that specific action so you can easily step backward or forward through your canvas changes.
+
+2. Strategy Pattern
+The ToolManager uses the DrawStrategy interface (implemented by FreehandStrategy, EraserStrategy, and ShapeStrategy) to handle mouse clicks and drags. Instead of writing messy if-else logic for each tool, the app swaps the active strategy class when you pick a new tool, changing how the mouse interacts with the canvas.
+
+3. Decorator Pattern
+The ShapeDecorator wraps around the base Shape class to apply extra visual styles like the BorderDecorator, FillDecorator, and ShadowDecorator. This lets the app dynamically stack effects (like adding a shadow and a thick border to a circle) without making the Shape classes overly complex.
+
+4. Factory Pattern
+The ShapeStrategy asks the IShapeFactory to manufacture different shapes. Depending on the tool you selected, the ShapeFactory uses concrete factories (like CircleShapeFactory or RectShapeFactory) to build the correct shape instance, keeping the drawing logic clean and separate from shape creation.
+
+5. Observer Pattern
+The AppState acts as an observable subject that notifies the Canvas and UIPanel (which both implement IObserver) whenever you change a setting. If you pick a new color or brush size, the AppState instantly broadcasts the update, and the Canvas automatically redraws itself to reflect the new state.
+
+6. Memento Pattern
+The Canvas uses a CanvasMemento to take snapshots of your artwork. Whenever you need to save the current state of the drawing, the Canvas packs all its current shapes into the CanvasMemento, which is safely stored by the CanvasCaretaker so you can seamlessly restore your progress later.
+
+7. Singleton Pattern
+The AppState and ToolManager classes are strictly limited to one instance each. This ensures that the entire application shares the exact same global state (like the currently selected color) and the exact same active tool, preventing different parts of the code from getting out of sync.

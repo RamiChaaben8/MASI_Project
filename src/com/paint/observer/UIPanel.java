@@ -5,6 +5,9 @@ import com.paint.singleton.ToolManager;
 import com.paint.strategy.EraserStrategy;
 import com.paint.strategy.FreehandStrategy;
 import com.paint.strategy.ShapeStrategy;
+import com.paint.factory.CircleShapeFactory;
+import com.paint.factory.RectShapeFactory;
+import com.paint.factory.LineShapeFactory;
 import com.paint.command.CommandHistory;
 import com.paint.command.ClearCommand;
 import javafx.geometry.Insets;
@@ -42,13 +45,13 @@ public class UIPanel extends VBox implements IObserver {
         btnEraser.setOnAction(e -> ToolManager.getInstance().setStrategy(new EraserStrategy(canvas, history)));
 
         Button btnCircle = new Button("Circle");
-        btnCircle.setOnAction(e -> ToolManager.getInstance().setStrategy(new ShapeStrategy("CIRCLE", canvas, history)));
+        btnCircle.setOnAction(e -> ToolManager.getInstance().setStrategy(new ShapeStrategy(new CircleShapeFactory(), canvas, history)));
 
         Button btnRect = new Button("Rectangle");
-        btnRect.setOnAction(e -> ToolManager.getInstance().setStrategy(new ShapeStrategy("RECT", canvas, history)));
+        btnRect.setOnAction(e -> ToolManager.getInstance().setStrategy(new ShapeStrategy(new RectShapeFactory(), canvas, history)));
 
         Button btnLine = new Button("Line");
-        btnLine.setOnAction(e -> ToolManager.getInstance().setStrategy(new ShapeStrategy("LINE", canvas, history)));
+        btnLine.setOnAction(e -> ToolManager.getInstance().setStrategy(new ShapeStrategy(new LineShapeFactory(), canvas, history)));
 
         colorPicker = new ColorPicker(AppState.getInstance().getCurrentColor());
         colorPicker.setOnAction(e -> AppState.getInstance().setColor(colorPicker.getValue()));

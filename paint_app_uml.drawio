@@ -1,0 +1,314 @@
+<mxfile>
+<diagram name="Paint App - UML Class Diagram" id="paint-app-uml">
+  <mxGraphModel dx="1200" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" pageScale="1" pageWidth="2000" pageHeight="1400" math="0" shadow="0">
+    <root>
+      <mxCell id="0"/>
+      <mxCell id="1" parent="0"/>
+
+      <!-- ============================================================ -->
+      <!-- LEGEND                                                        -->
+      <!-- ============================================================ -->
+      <mxCell id="legend-bg" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F5F5F5;dashed=0;fontSize=12;" parent="1" vertex="1">
+        <mxGeometry x="1450" y="20" width="280" height="240" as="geometry"/>
+      </mxCell>
+      <mxCell id="legend-title" value="&lt;b&gt;Legend&lt;/b&gt;" style="text;html=1;fontSize=14;align=center;verticalAlign=middle;fontStyle=1;" parent="1" vertex="1">
+        <mxGeometry x="1450" y="25" width="280" height="30" as="geometry"/>
+      </mxCell>
+      <mxCell id="legend-interface" value="&lt;&lt;interface&gt;&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#DAEEF3;fontFamily=Consolas;fontSize=11;" parent="1" vertex="1">
+        <mxGeometry x="1470" y="65" width="130" height="26" as="geometry"/>
+      </mxCell>
+      <mxCell id="legend-interface-text" value="Interface" style="text;html=1;fontSize=11;align=left;verticalAlign=middle;" parent="1" vertex="1">
+        <mxGeometry x="1610" y="65" width="100" height="26" as="geometry"/>
+      </mxCell>
+      <mxCell id="legend-abstract" value="AbstractClass" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFF2CC;fontFamily=Consolas;fontSize=11;fontStyle=2;" parent="1" vertex="1">
+        <mxGeometry x="1470" y="100" width="130" height="26" as="geometry"/>
+      </mxCell>
+      <mxCell id="legend-abstract-text" value="Abstract Class" style="text;html=1;fontSize=11;align=left;verticalAlign=middle;" parent="1" vertex="1">
+        <mxGeometry x="1610" y="100" width="100" height="26" as="geometry"/>
+      </mxCell>
+      <mxCell id="legend-concrete" value="ConcreteClass" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#E8F5E9;fontFamily=Consolas;fontSize=11;" parent="1" vertex="1">
+        <mxGeometry x="1470" y="135" width="130" height="26" as="geometry"/>
+      </mxCell>
+      <mxCell id="legend-concrete-text" value="Concrete Class" style="text;html=1;fontSize=11;align=left;verticalAlign=middle;" parent="1" vertex="1">
+        <mxGeometry x="1610" y="135" width="100" height="26" as="geometry"/>
+      </mxCell>
+      <mxCell id="legend-singleton" value="Singleton" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFE0E0;fontFamily=Consolas;fontSize=11;fontStyle=1;" parent="1" vertex="1">
+        <mxGeometry x="1470" y="170" width="130" height="26" as="geometry"/>
+      </mxCell>
+      <mxCell id="legend-singleton-text" value="Singleton" style="text;html=1;fontSize=11;align=left;verticalAlign=middle;" parent="1" vertex="1">
+        <mxGeometry x="1610" y="170" width="100" height="26" as="geometry"/>
+      </mxCell>
+
+      <mxCell id="legend-arrow-implements" value="" style="endArrow=block;dashed=1;endFill=0;fontSize=11;edgeStyle=elbowEdgeStyle;" parent="1" edge="1">
+        <mxGeometry x="0.001" relative="1" as="geometry">
+          <mxPoint x="1470" y="215"/>
+          <mxPoint x="1565" y="215"/>
+        </mxGeometry>
+      </mxCell>
+      <mxCell id="legend-arrow-implements-text" value="implements" style="text;html=1;fontSize=11;align=left;verticalAlign=middle;" parent="1" vertex="1">
+        <mxGeometry x="1570" y="205" width="100" height="20" as="geometry"/>
+      </mxCell>
+
+      <!-- ============================================================ -->
+      <!-- 1. SINGLETON PATTERN                                          -->
+      <!-- ============================================================ -->
+      <mxCell id="singleton-title" value="1. Singleton Pattern" style="text;html=1;fontSize=14;align=center;verticalAlign=middle;fontColor=#CC0000;fontStyle=1;" parent="1" vertex="1">
+        <mxGeometry x="20" y="20" width="200" height="30" as="geometry"/>
+      </mxCell>
+
+      <mxCell id="AppState" value="&lt;b&gt;AppState&lt;/b&gt;&lt;hr&gt;- instance: AppState&lt;br&gt;- currentColor: Color&lt;br&gt;- brushSize: int&lt;br&gt;- observers: List&amp;lt;IObserver&amp;gt;&lt;hr&gt;+ getInstance(): AppState&lt;br&gt;+ setColor(c): void&lt;br&gt;+ addObserver(o): void&lt;br&gt;+ notifyObservers(): void" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFE0E0;fontFamily=Consolas;fontSize=11;fontStyle=1;" parent="1" vertex="1">
+        <mxGeometry x="20" y="55" width="250" height="130" as="geometry"/>
+      </mxCell>
+
+      <mxCell id="ToolManager" value="&lt;b&gt;ToolManager&lt;/b&gt;&lt;hr&gt;- instance: ToolManager&lt;br&gt;- strategy: DrawStrategy&lt;hr&gt;+ getInstance(): ToolManager&lt;br&gt;+ setStrategy(s): void&lt;br&gt;+ onPress(x,y): void&lt;br&gt;+ onDrag(x,y): void&lt;br&gt;+ onRelease(x,y): void" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFE0E0;fontFamily=Consolas;fontSize=11;fontStyle=1;" parent="1" vertex="1">
+        <mxGeometry x="310" y="55" width="250" height="130" as="geometry"/>
+      </mxCell>
+
+      <!-- ============================================================ -->
+      <!-- 2. OBSERVER PATTERN                                           -->
+      <!-- ============================================================ -->
+      <mxCell id="observer-title" value="2. Observer Pattern" style="text;html=1;fontSize=14;align=center;verticalAlign=middle;fontColor=#0066CC;fontStyle=1;" parent="1" vertex="1">
+        <mxGeometry x="80" y="220" width="200" height="30" as="geometry"/>
+      </mxCell>
+
+      <mxCell id="IObserver" value="&lt;b&gt;&amp;lt;&amp;lt;interface&amp;gt;&amp;gt;&lt;br&gt;IObserver&lt;/b&gt;&lt;hr&gt;+ update(): void" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#DAEEF3;fontFamily=Consolas;fontSize=11;" parent="1" vertex="1">
+        <mxGeometry x="80" y="255" width="180" height="60" as="geometry"/>
+      </mxCell>
+
+      <mxCell id="Canvas" value="&lt;b&gt;Canvas&lt;/b&gt;&lt;hr&gt;- shapes: List&amp;lt;Shape&amp;gt;&lt;br&gt;- previewShape: Shape&lt;hr&gt;+ addShape(s): void&lt;br&gt;+ removeShape(s): void&lt;br&gt;+ clearShapes(): void&lt;br&gt;+ createMemento(): CanvasMemento&lt;br&gt;+ restore(m): void&lt;br&gt;+ redraw(): void&lt;br&gt;+ update(): void" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#E8F5E9;fontFamily=Consolas;fontSize=11;" parent="1" vertex="1">
+        <mxGeometry x="10" y="340" width="220" height="140" as="geometry"/>
+      </mxCell>
+
+      <mxCell id="UIPanel" value="&lt;b&gt;UIPanel&lt;/b&gt;&lt;hr&gt;- colorPicker: ColorPicker&lt;br&gt;- caretaker: CanvasCaretaker&lt;hr&gt;+ update(): void&lt;br&gt;+ refreshToolbar(): void" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#E8F5E9;fontFamily=Consolas;fontSize=11;" parent="1" vertex="1">
+        <mxGeometry x="270" y="380" width="200" height="90" as="geometry"/>
+      </mxCell>
+
+      <mxCell id="observer-impl-canvas" value="" style="endArrow=block;dashed=1;endFill=0;exitX=0.5;exitY=0;entryX=0.3;entryY=1;" parent="1" edge="1" source="Canvas" target="IObserver">
+        <mxGeometry relative="1" as="geometry"/>
+      </mxCell>
+      <mxCell id="observer-impl-uipanel" value="" style="endArrow=block;dashed=1;endFill=0;exitX=0.5;exitY=0;entryX=0.7;entryY=1;" parent="1" edge="1" source="UIPanel" target="IObserver">
+        <mxGeometry relative="1" as="geometry"/>
+      </mxCell>
+      <mxCell id="observer-notify" value="notifies" style="endArrow=block;dashed=1;endFill=0;exitX=1;exitY=0;entryX=0;entryY=0;fontSize=10;" parent="1" edge="1" source="AppState" target="IObserver">
+        <mxGeometry relative="1" as="geometry"/>
+      </mxCell>
+
+      <!-- ============================================================ -->
+      <!-- 3. COMMAND PATTERN                                            -->
+      <!-- ============================================================ -->
+      <mxCell id="command-title" value="3. Command Pattern" style="text;html=1;fontSize=14;align=center;verticalAlign=middle;fontColor=#006666;fontStyle=1;" parent="1" vertex="1">
+        <mxGeometry x="570" y="20" width="200" height="30" as="geometry"/>
+      </mxCell>
+
+      <mxCell id="ICommand" value="&lt;b&gt;&amp;lt;&amp;lt;interface&amp;gt;&amp;gt;&lt;br&gt;ICommand&lt;/b&gt;&lt;hr&gt;+ execute(): void&lt;br&gt;+ undo(): void" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#DAEEF3;fontFamily=Consolas;fontSize=11;" parent="1" vertex="1">
+        <mxGeometry x="640" y="55" width="180" height="60" as="geometry"/>
+      </mxCell>
+
+      <mxCell id="DrawCommand" value="&lt;b&gt;DrawCommand&lt;/b&gt;&lt;hr&gt;- shape: Shape&lt;br&gt;- canvas: Canvas&lt;hr&gt;+ execute(): void&lt;br&gt;+ undo(): void" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#E8F5E9;fontFamily=Consolas;fontSize=11;" parent="1" vertex="1">
+        <mxGeometry x="550" y="140" width="200" height="80" as="geometry"/>
+      </mxCell>
+
+      <mxCell id="DeleteCommand" value="&lt;b&gt;DeleteCommand&lt;/b&gt;&lt;hr&gt;- shape: Shape&lt;br&gt;- canvas: Canvas&lt;hr&gt;+ execute(): void&lt;br&gt;+ undo(): void" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#E8F5E9;fontFamily=Consolas;fontSize=11;" parent="1" vertex="1">
+        <mxGeometry x="800" y="140" width="200" height="80" as="geometry"/>
+      </mxCell>
+
+      <mxCell id="ClearCommand" value="&lt;b&gt;ClearCommand&lt;/b&gt;&lt;hr&gt;- memento: CanvasMemento&lt;br&gt;- canvas: Canvas&lt;hr&gt;+ execute(): void&lt;br&gt;+ undo(): void" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#E8F5E9;fontFamily=Consolas;fontSize=11;" parent="1" vertex="1">
+        <mxGeometry x="1050" y="140" width="200" height="80" as="geometry"/>
+      </mxCell>
+
+      <mxCell id="DecorateAllCommand" value="&lt;b&gt;DecorateAllCommand&lt;/b&gt;&lt;hr&gt;- oldState: CanvasMemento&lt;br&gt;- canvas: Canvas&lt;hr&gt;+ execute(): void&lt;br&gt;+ undo(): void" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#E8F5E9;fontFamily=Consolas;fontSize=11;" parent="1" vertex="1">
+        <mxGeometry x="600" y="250" width="200" height="80" as="geometry"/>
+      </mxCell>
+
+      <mxCell id="CommandHistory" value="&lt;b&gt;CommandHistory&lt;/b&gt;&lt;hr&gt;- history: Stack&amp;lt;ICommand&amp;gt;&lt;br&gt;- redoStack: Stack&amp;lt;ICommand&amp;gt;&lt;hr&gt;+ execute(cmd): void&lt;br&gt;+ undo(): void&lt;br&gt;+ redo(): void" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#E8F5E9;fontFamily=Consolas;fontSize=11;" parent="1" vertex="1">
+        <mxGeometry x="1050" y="250" width="200" height="100" as="geometry"/>
+      </mxCell>
+
+      <mxCell id="drawcmd-impl" value="" style="endArrow=block;dashed=1;endFill=0;exitX=0.5;exitY=0;entryX=0.2;entryY=1;" parent="1" edge="1" source="DrawCommand" target="ICommand">
+        <mxGeometry relative="1" as="geometry"/>
+      </mxCell>
+      <mxCell id="delcmd-impl" value="" style="endArrow=block;dashed=1;endFill=0;exitX=0.5;exitY=0;entryX=0.5;entryY=1;" parent="1" edge="1" source="DeleteCommand" target="ICommand">
+        <mxGeometry relative="1" as="geometry"/>
+      </mxCell>
+      <mxCell id="clearcmd-impl" value="" style="endArrow=block;dashed=1;endFill=0;exitX=0.5;exitY=0;entryX=0.8;entryY=1;" parent="1" edge="1" source="ClearCommand" target="ICommand">
+        <mxGeometry relative="1" as="geometry"/>
+      </mxCell>
+      <mxCell id="decorate-impl" value="" style="endArrow=block;dashed=1;endFill=0;exitX=0.5;exitY=0;entryX=0.35;entryY=1;" parent="1" edge="1" source="DecorateAllCommand" target="ICommand">
+        <mxGeometry relative="1" as="geometry"/>
+      </mxCell>
+      <mxCell id="cmdhist-uses" value="uses" style="endArrow=block;dashed=1;endFill=0;fontSize=10;" parent="1" edge="1" source="CommandHistory" target="DecorateAllCommand">
+        <mxGeometry relative="1" as="geometry"/>
+      </mxCell>
+
+      <!-- ============================================================ -->
+      <!-- 7. MEMENTO PATTERN                                            -->
+      <!-- ============================================================ -->
+      <mxCell id="memento-title" value="7. Memento Pattern" style="text;html=1;fontSize=14;align=center;verticalAlign=middle;fontColor=#660099;fontStyle=1;" parent="1" vertex="1">
+        <mxGeometry x="600" y="370" width="200" height="30" as="geometry"/>
+      </mxCell>
+
+      <mxCell id="CanvasMemento" value="&lt;b&gt;CanvasMemento&lt;/b&gt;&lt;hr&gt;- shapes: List&amp;lt;Shape&amp;gt;&lt;br&gt;- brushSize: int&lt;hr&gt;+ getShapes(): List&amp;lt;Shape&amp;gt;&lt;br&gt;+ getBrushSize(): int" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#E8F5E9;fontFamily=Consolas;fontSize=11;" parent="1" vertex="1">
+        <mxGeometry x="610" y="410" width="230" height="90" as="geometry"/>
+      </mxCell>
+
+      <mxCell id="CanvasCaretaker" value="&lt;b&gt;CanvasCaretaker&lt;/b&gt;&lt;hr&gt;- mementos: Stack&lt;hr&gt;+ save(m): void&lt;br&gt;+ restore(): CanvasMemento&lt;br&gt;+ saveToFile(m): void&lt;br&gt;+ loadFromFile(): CanvasMemento" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#E8F5E9;fontFamily=Consolas;fontSize=11;" parent="1" vertex="1">
+        <mxGeometry x="900" y="410" width="230" height="110" as="geometry"/>
+      </mxCell>
+
+      <mxCell id="memento-creates" value="creates / restores" style="endArrow=block;dashed=1;endFill=0;fontSize=10;" parent="1" edge="1" source="Canvas" target="CanvasMemento">
+        <mxGeometry relative="1" as="geometry"/>
+      </mxCell>
+      <mxCell id="memento-manages" value="manages" style="endArrow=block;dashed=1;endFill=0;fontSize=10;" parent="1" edge="1" source="CanvasCaretaker" target="CanvasMemento">
+        <mxGeometry relative="1" as="geometry"/>
+      </mxCell>
+
+      <!-- ============================================================ -->
+      <!-- 4. STRATEGY PATTERN                                           -->
+      <!-- ============================================================ -->
+      <mxCell id="strategy-title" value="4. Strategy Pattern" style="text;html=1;fontSize=14;align=center;verticalAlign=middle;fontColor=#6600CC;fontStyle=1;" parent="1" vertex="1">
+        <mxGeometry x="1300" y="220" width="200" height="30" as="geometry"/>
+      </mxCell>
+
+      <mxCell id="DrawStrategy" value="&lt;b&gt;&amp;lt;&amp;lt;interface&amp;gt;&amp;gt;&lt;br&gt;DrawStrategy&lt;/b&gt;&lt;hr&gt;+ onPress(x,y): void&lt;br&gt;+ onDrag(x,y): void&lt;br&gt;+ onRelease(x,y): void" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#DAEEF3;fontFamily=Consolas;fontSize=11;" parent="1" vertex="1">
+        <mxGeometry x="1330" y="255" width="190" height="75" as="geometry"/>
+      </mxCell>
+
+      <mxCell id="ShapeStrategy" value="&lt;b&gt;ShapeStrategy&lt;/b&gt;&lt;hr&gt;- shapeType: String&lt;br&gt;- startX/Y: double&lt;hr&gt;+ onPress(x,y): void&lt;br&gt;+ onDrag(x,y): void&lt;br&gt;+ onRelease(x,y): void" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#E8F5E9;fontFamily=Consolas;fontSize=11;" parent="1" vertex="1">
+        <mxGeometry x="1290" y="360" width="190" height="90" as="geometry"/>
+      </mxCell>
+
+      <mxCell id="FreehandStrategy" value="&lt;b&gt;FreehandStrategy&lt;/b&gt;&lt;hr&gt;- currentShape: FreehandShape&lt;hr&gt;+ onPress(x,y): void&lt;br&gt;+ onDrag(x,y): void&lt;br&gt;+ onRelease(x,y): void" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#E8F5E9;fontFamily=Consolas;fontSize=11;" parent="1" vertex="1">
+        <mxGeometry x="1520" y="360" width="190" height="85" as="geometry"/>
+      </mxCell>
+
+      <mxCell id="EraserStrategy" value="&lt;b&gt;EraserStrategy&lt;/b&gt;&lt;hr&gt;- currentShape: FreehandShape&lt;hr&gt;+ onPress(x,y): void&lt;br&gt;+ onDrag(x,y): void&lt;br&gt;+ onRelease(x,y): void" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#E8F5E9;fontFamily=Consolas;fontSize=11;" parent="1" vertex="1">
+        <mxGeometry x="1750" y="360" width="190" height="85" as="geometry"/>
+      </mxCell>
+
+      <mxCell id="shapestrat-impl" value="" style="endArrow=block;dashed=1;endFill=0;exitX=0.5;exitY=0;entryX=0.2;entryY=1;" parent="1" edge="1" source="ShapeStrategy" target="DrawStrategy">
+        <mxGeometry relative="1" as="geometry"/>
+      </mxCell>
+      <mxCell id="freehandstrat-impl" value="" style="endArrow=block;dashed=1;endFill=0;exitX=0.5;exitY=0;entryX=0.5;entryY=1;" parent="1" edge="1" source="FreehandStrategy" target="DrawStrategy">
+        <mxGeometry relative="1" as="geometry"/>
+      </mxCell>
+      <mxCell id="eraserstrat-impl" value="" style="endArrow=block;dashed=1;endFill=0;exitX=0.5;exitY=0;entryX=0.8;entryY=1;" parent="1" edge="1" source="EraserStrategy" target="DrawStrategy">
+        <mxGeometry relative="1" as="geometry"/>
+      </mxCell>
+      <mxCell id="toolmanager-uses-strat" value="uses" style="endArrow=block;dashed=1;endFill=0;fontSize=10;" parent="1" edge="1" source="ToolManager" target="DrawStrategy">
+        <mxGeometry relative="1" as="geometry"/>
+      </mxCell>
+
+      <!-- ============================================================ -->
+      <!-- 5. DECORATOR PATTERN                                          -->
+      <!-- ============================================================ -->
+      <mxCell id="decorator-title" value="5. Decorator Pattern" style="text;html=1;fontSize=14;align=center;verticalAlign=middle;fontColor=#006600;fontStyle=1;" parent="1" vertex="1">
+        <mxGeometry x="20" y="520" width="200" height="30" as="geometry"/>
+      </mxCell>
+
+      <mxCell id="Shape" value="&lt;b&gt;Shape&lt;/b&gt;&lt;hr&gt;&lt;i&gt;# color: Color&lt;/i&gt;&lt;br&gt;&lt;i&gt;# x,y,w,h: double&lt;/i&gt;&lt;hr&gt;+ draw(gc): void&lt;br&gt;+ clone(): Shape" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFF2CC;fontFamily=Consolas;fontSize=11;fontStyle=2;" parent="1" vertex="1">
+        <mxGeometry x="30" y="555" width="180" height="90" as="geometry"/>
+      </mxCell>
+
+      <mxCell id="ShapeDecorator" value="&lt;b&gt;ShapeDecorator&lt;/b&gt;&lt;hr&gt;&lt;i&gt;# wrapped: Shape&lt;/i&gt;&lt;hr&gt;+ draw(gc): void&lt;br&gt;+ clone(): Shape" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFF2CC;fontFamily=Consolas;fontSize=11;fontStyle=2;" parent="1" vertex="1">
+        <mxGeometry x="260" y="555" width="190" height="80" as="geometry"/>
+      </mxCell>
+
+      <mxCell id="BorderDecorator" value="&lt;b&gt;BorderDecorator&lt;/b&gt;&lt;hr&gt;- strokeColor: Color&lt;br&gt;- strokeWidth: double&lt;hr&gt;+ draw(gc): void" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#E8F5E9;fontFamily=Consolas;fontSize=11;" parent="1" vertex="1">
+        <mxGeometry x="260" y="670" width="190" height="70" as="geometry"/>
+      </mxCell>
+
+      <mxCell id="FillDecorator" value="&lt;b&gt;FillDecorator&lt;/b&gt;&lt;hr&gt;- fillColor: Color&lt;hr&gt;+ draw(gc): void" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#E8F5E9;fontFamily=Consolas;fontSize=11;" parent="1" vertex="1">
+        <mxGeometry x="480" y="670" width="180" height="60" as="geometry"/>
+      </mxCell>
+
+      <mxCell id="ShadowDecorator" value="&lt;b&gt;ShadowDecorator&lt;/b&gt;&lt;hr&gt;- shadowColor: Color&lt;br&gt;- offset: int&lt;hr&gt;+ draw(gc): void" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#E8F5E9;fontFamily=Consolas;fontSize=11;" parent="1" vertex="1">
+        <mxGeometry x="700" y="670" width="190" height="70" as="geometry"/>
+      </mxCell>
+
+      <mxCell id="decorator-extends-shape" value="" style="endArrow=block;endFill=1;exitX=0.5;exitY=0;entryX=0.5;entryY=1;" parent="1" edge="1" source="ShapeDecorator" target="Shape">
+        <mxGeometry relative="1" as="geometry"/>
+      </mxCell>
+      <mxCell id="border-extends" value="" style="endArrow=block;endFill=1;exitX=0.5;exitY=0;entryX=0.3;entryY=1;" parent="1" edge="1" source="BorderDecorator" target="ShapeDecorator">
+        <mxGeometry relative="1" as="geometry"/>
+      </mxCell>
+      <mxCell id="fill-extends" value="" style="endArrow=block;endFill=1;exitX=0.5;exitY=0;entryX=0.5;entryY=1;" parent="1" edge="1" source="FillDecorator" target="ShapeDecorator">
+        <mxGeometry relative="1" as="geometry"/>
+      </mxCell>
+      <mxCell id="shadow-extends" value="" style="endArrow=block;endFill=1;exitX=0.5;exitY=0;entryX=0.7;entryY=1;" parent="1" edge="1" source="ShadowDecorator" target="ShapeDecorator">
+        <mxGeometry relative="1" as="geometry"/>
+      </mxCell>
+      <mxCell id="decorator-wraps" value="wraps" style="endArrow=diamond;endFill=0;fontSize=10;" parent="1" edge="1" source="ShapeDecorator" target="Shape">
+        <mxGeometry relative="1" as="geometry"/>
+      </mxCell>
+
+      <!-- ============================================================ -->
+      <!-- 6. FACTORY PATTERN                                            -->
+      <!-- ============================================================ -->
+      <mxCell id="factory-title" value="6. Factory Pattern" style="text;html=1;fontSize=14;align=center;verticalAlign=middle;fontColor=#CC6600;fontStyle=1;" parent="1" vertex="1">
+        <mxGeometry x="570" y="520" width="200" height="30" as="geometry"/>
+      </mxCell>
+
+      <mxCell id="IShapeFactory" value="&lt;b&gt;&amp;lt;&amp;lt;interface&amp;gt;&amp;gt;&lt;br&gt;IShapeFactory&lt;/b&gt;&lt;hr&gt;+ createShape(Color): Shape" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#DAEEF3;fontFamily=Consolas;fontSize=11;" parent="1" vertex="1">
+        <mxGeometry x="640" y="555" width="200" height="55" as="geometry"/>
+      </mxCell>
+
+      <mxCell id="ShapeFactory" value="&lt;b&gt;ShapeFactory&lt;/b&gt;&lt;hr&gt;+ createShape(type, Color): Shape" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#E8F5E9;fontFamily=Consolas;fontSize=11;" parent="1" vertex="1">
+        <mxGeometry x="570" y="640" width="180" height="55" as="geometry"/>
+      </mxCell>
+
+      <mxCell id="CircleShapeFactory" value="&lt;b&gt;CircleShape&lt;br&gt;Factory&lt;/b&gt;&lt;hr&gt;+ createShape(Color): Shape" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#E8F5E9;fontFamily=Consolas;fontSize=11;" parent="1" vertex="1">
+        <mxGeometry x="790" y="640" width="180" height="60" as="geometry"/>
+      </mxCell>
+
+      <mxCell id="RectShapeFactory" value="&lt;b&gt;RectShape&lt;br&gt;Factory&lt;/b&gt;&lt;hr&gt;+ createShape(Color): Shape" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#E8F5E9;fontFamily=Consolas;fontSize=11;" parent="1" vertex="1">
+        <mxGeometry x="1000" y="640" width="180" height="60" as="geometry"/>
+      </mxCell>
+
+      <mxCell id="LineShapeFactory" value="&lt;b&gt;LineShape&lt;br&gt;Factory&lt;/b&gt;&lt;hr&gt;+ createShape(Color): Shape" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#E8F5E9;fontFamily=Consolas;fontSize=11;" parent="1" vertex="1">
+        <mxGeometry x="1210" y="640" width="180" height="60" as="geometry"/>
+      </mxCell>
+
+      <mxCell id="circfactory-impl" value="" style="endArrow=block;dashed=1;endFill=0;exitX=0.5;exitY=0;entryX=0.25;entryY=1;" parent="1" edge="1" source="CircleShapeFactory" target="IShapeFactory">
+        <mxGeometry relative="1" as="geometry"/>
+      </mxCell>
+      <mxCell id="rectfactory-impl" value="" style="endArrow=block;dashed=1;endFill=0;exitX=0.5;exitY=0;entryX=0.5;entryY=1;" parent="1" edge="1" source="RectShapeFactory" target="IShapeFactory">
+        <mxGeometry relative="1" as="geometry"/>
+      </mxCell>
+      <mxCell id="linefactory-impl" value="" style="endArrow=block;dashed=1;endFill=0;exitX=0.5;exitY=0;entryX=0.75;entryY=1;" parent="1" edge="1" source="LineShapeFactory" target="IShapeFactory">
+        <mxGeometry relative="1" as="geometry"/>
+      </mxCell>
+
+      <!-- Concrete Shapes -->
+      <mxCell id="CircleShape" value="&lt;b&gt;CircleShape&lt;/b&gt;&lt;hr&gt;+ draw(gc): void" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#E8F5E9;fontFamily=Consolas;fontSize=11;" parent="1" vertex="1">
+        <mxGeometry x="790" y="730" width="180" height="45" as="geometry"/>
+      </mxCell>
+
+      <mxCell id="RectShape" value="&lt;b&gt;RectShape&lt;/b&gt;&lt;hr&gt;+ draw(gc): void" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#E8F5E9;fontFamily=Consolas;fontSize=11;" parent="1" vertex="1">
+        <mxGeometry x="1000" y="730" width="180" height="45" as="geometry"/>
+      </mxCell>
+
+      <mxCell id="LineShape" value="&lt;b&gt;LineShape&lt;/b&gt;&lt;hr&gt;+ draw(gc): void" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#E8F5E9;fontFamily=Consolas;fontSize=11;" parent="1" vertex="1">
+        <mxGeometry x="1210" y="730" width="180" height="45" as="geometry"/>
+      </mxCell>
+
+      <mxCell id="FreehandShape" value="&lt;b&gt;FreehandShape&lt;/b&gt;&lt;hr&gt;+ addPoint(x,y): void&lt;br&gt;+ draw(gc): void&lt;br&gt;+ clone(): Shape" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#E8F5E9;fontFamily=Consolas;fontSize=11;" parent="1" vertex="1">
+        <mxGeometry x="570" y="730" width="190" height="65" as="geometry"/>
+      </mxCell>
+
+      <mxCell id="circleshape-extends" value="" style="endArrow=block;endFill=1;exitX=0.5;exitY=0;entryX=0.35;entryY=1;" parent="1" edge="1" source="CircleShape" target="Shape">
+        <mxGeometry relative="1" as="geometry"/>
+      </mxCell>
+      <mxCell id="rectshape-extends" value="" style="endArrow=block;endFill=1;exitX=0.5;exitY=0;entryX=0.5;entryY=1;" parent="1" edge="1" source="RectShape" target="Shape">
+        <mxGeometry relative="1" as="geometry"/>
+      </mxCell>
+      <mxCell id="lineshape-extends" value="" style="endArrow=block;endFill=1;exitX=0.5;exitY=0;entryX=0.65;entryY=1;" parent="1" edge="1" source="LineShape" target="Shape">
+        <mxGeometry relative="1" as="geometry"/>
+      </mxCell>
+      <mxCell id="freehandshape-extends" value="" style="endArrow=block;endFill=1;exitX=0.5;exitY=0;entryX=0.2;entryY=1;" parent="1" edge="1" source="FreehandShape" target="Shape">
+        <mxGeometry relative="1" as="geometry"/>
+      </mxCell>
+
+    </root>
+  </mxGraphModel>
+</diagram>
+</mxfile>
