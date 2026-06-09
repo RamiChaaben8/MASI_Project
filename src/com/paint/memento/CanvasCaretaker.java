@@ -6,19 +6,7 @@ import java.util.List;
 import java.util.Stack;
 
 public class CanvasCaretaker {
-    private Stack<CanvasMemento> mementos = new Stack<>();
     private static final String SAVE_FILE = "workspace_save.dat";
-
-    public void save(CanvasMemento m) {
-        mementos.push(m);
-    }
-
-    public CanvasMemento restore() {
-        if (!mementos.isEmpty()) {
-            return mementos.pop();
-        }
-        return null;
-    }
 
     public void saveToFile(CanvasMemento m) {
         try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(SAVE_FILE))) {
